@@ -1,0 +1,11 @@
+{
+  "name": "cirrus",
+  "version": "0.0.0",
+  "description": "",
+  "devDependencies": {
+    "serverless": "~3.18.0",
+    "serverless-python-requirements": "~5.4.0",
+    "serverless-step-functions": "~3.7.0",
+    "serverless-iam-roles-per-function": "~3.2.0"
+  }
+}

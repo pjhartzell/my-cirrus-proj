@@ -1,0 +1,35 @@
+name: ${self:service}-${self:provider.stage}-reproject-sentinel-2
+definition:
+  Comment: Downloads the latest EarthSearch Sentinel-2 Item and reprojects it to the specified CRS
+  StartAt: download
+  States:
+    download:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [download, Arn]
+      Next: publish
+      Retry:
+        - ErrorEquals: ["Lambda.TooManyRequestsException", "Lambda.Unknown"]
+          IntervalSeconds: 1
+          BackoffRate: 2.0
+          MaxAttempts: 5
+      Catch:
+        - ErrorEquals: ["States.ALL"]
+          ResultPath: $.error
+          Next: failure
+    publish:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [publish, Arn]
+      End: True
+      Retry:
+        - ErrorEquals: ["Lambda.TooManyRequestsException", "Lambda.Unknown"]
+          IntervalSeconds: 1
+          BackoffRate: 2.0
+          MaxAttempts: 5
+      Catch:
+        - ErrorEquals: ["States.ALL"]
+          ResultPath: $.error
+          Next: failure
+    failure:
+      Type: Fail

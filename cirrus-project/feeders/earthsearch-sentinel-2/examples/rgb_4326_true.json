@@ -1,0 +1,8 @@
+{
+    "assets": [
+        "red",
+        "green"
+    ],
+    "crs": "EPSG:4326",
+    "dry_run": true
+}

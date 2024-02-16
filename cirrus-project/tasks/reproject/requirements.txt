@@ -1,0 +1,3 @@
+cirrus-geo
+rasterio
+stactask
